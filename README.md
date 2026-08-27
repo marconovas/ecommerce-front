@@ -1,16 +1,47 @@
-# React + Vite
+# E-commerce Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern e-commerce frontend built with **React** and **Vite**, designed to consume and interact with a custom REST API developed specifically for this project.
 
-Currently, two official plugins are available:
+This repository contains the **frontend application only**. The backend is maintained as a separate project.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Technologies
 
-## React Compiler
+- React
+- Vite
+- JavaScript
+- Bootstrap
+- REST API
+- Git / GitHub
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ✨ Features
 
-## Expanding the ESLint configuration
+The application is currently under development.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Planned features include:
+
+- Product listing
+- Product details
+- Product categories
+- Shopping cart
+- User registration and authentication
+- Order management
+- API integration
+- Responsive design
+
+## 🔗 Backend
+
+This frontend communicates with a custom REST API developed with:
+
+- Node.js
+- Express
+- Prisma
+- PostgreSQL
+
+The backend is maintained in a separate repository.
+
+## ⚙️ Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/marconovas/ecommerce-front/
