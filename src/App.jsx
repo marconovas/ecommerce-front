@@ -1,37 +1,13 @@
-import { useEffect, useState } from "react";
-import NavBar from "./components/navbar";
-import ProductList from "./components/ProductList";
+import { useState } from "react";
+import NavBar from "./components/NavBar.jsx";
 import Cart from "./components/Cart";
+import { Route, Routes } from "react-router-dom";
+import Home from "./pages/Home.jsx";
+import Products from "./pages/Products.jsx";
 
-const API_URL = "http://localhost:3000/products";
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
-  const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    async function fetchProducts() {
-      try{
-        const res = await fetch(API_URL);
-        const data = await res.json();
-        console.log(data);
-        
-        setProducts(data.data);
-
-      } catch(error) {
-
-        console.log(error);
-        setError(true);
-
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    fetchProducts();
-  }, []);
 
   return (
     <>
@@ -40,19 +16,29 @@ function App() {
         cartItems={cartItems}
       />
 
-      {isLoading ? 
-        <span>Loading...</span>
-      : error ? (
-        <span>Something Failed!</span>
-      ) 
-      : (
-        <ProductList 
-          products={products} 
-          setCartItems={setCartItems}
-        />
-      )}
+      <Routes>
+        <Route path="/" element={<Home />}/>
 
-      <Cart  cartItems={cartItems} setCartItems={setCartItems}/>
+        <Route 
+          path="/products" 
+          element={
+            <Products
+              setCartItems={setCartItems}
+            />
+          }
+        />
+
+        <Route 
+          path="/cart"
+          element={
+            <Cart
+              cartItems={cartItems}
+              setCartItems={setCartItems} 
+            />
+          }
+        />
+      </Routes>
+     
     </>
   )
 }

@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 function NavBar({ title, cartItems }) {
   return (
     <nav className="navbar navbar-expand-lg bg-dark">
@@ -9,15 +11,15 @@ function NavBar({ title, cartItems }) {
         <ul className="navbar-nav">
 
           <li className="nav-item">
-            <a className="nav-link text-light" href="#">
+            <Link className="nav-link text-light" to="/">
               Home
-            </a>
+            </Link>
           </li>
           
           <li className="nav-item">
-            <a className="nav-link text-light" href="#">
+            <Link className="nav-link text-light" to="/products">
               Products
-            </a>
+            </Link>
           </li>
           
           <li className="nav-item">
@@ -33,12 +35,12 @@ function NavBar({ title, cartItems }) {
           </li>
           
           <li className="nav-item">
-            <a className="nav-link text-light" href="#">
+            <Link className="nav-link text-light" to="/cart">
               Shopping Cart
               <span className="badge bg-primary ms-2">
                 {cartItems.reduce((total, item) => total + item.quantity, 0)}
               </span>
-            </a>
+            </Link>
           </li>
         </ul>
       </div>
