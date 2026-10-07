@@ -4,6 +4,7 @@ import Cart from "./components/Cart";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Products from "./pages/Products.jsx";
+import Login from "./pages/Login.jsx";
 
 
 function App() {
@@ -34,6 +35,14 @@ function App() {
             <Cart
               cartItems={cartItems}
               setCartItems={setCartItems} 
+            />
+          }
+        />
+
+        <Route 
+          path="/login"
+          element={
+            <Login
             />
           }
         />
