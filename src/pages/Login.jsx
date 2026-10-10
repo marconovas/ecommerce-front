@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import AuthContext from "../context/AuthContext";
 
 const API_URL = "http://localhost:3000/auth/login";
 
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    //Context use
+    const { setUser } = useContext(AuthContext);
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -26,6 +30,11 @@ function Login() {
 
         //save user token
         localStorage.setItem("token", token);
+
+        //Set global state
+        setUser(data.user.user);
+
+        localStorage.setItem("user", JSON.stringify(data.user.user));
 
     }
 
