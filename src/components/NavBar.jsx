@@ -1,6 +1,10 @@
+import { useContext } from "react"
 import { Link } from "react-router-dom"
+import AuthContext from "../context/AuthContext"
 
 function NavBar({ title, cartItems }) {
+  const { user, setUser } = useContext(AuthContext);
+
   return (
     <nav className="navbar navbar-expand-lg bg-dark">
       <div className="container">
@@ -29,10 +33,30 @@ function NavBar({ title, cartItems }) {
           </li>
           
           <li className="nav-item">
-            <a className="nav-link text-light" href="#">
-              My Account
-            </a>
+            { user ? (
+              <span className="text-light">{user.name}</span>
+            ) : (
+              <Link className="nav-link text-light" to="/login">
+                My Account
+              </Link>
+            )}
           </li>
+
+          {user && (
+            <li>
+              <button 
+                type="button" 
+                className="btn btn-danger"
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  localStorage.removeItem("user");
+                  setUser(null)
+                }}
+              >
+                Log-Out
+              </button>
+            </li>
+          )}
           
           <li className="nav-item">
             <Link className="nav-link text-light" to="/cart">
