@@ -6,35 +6,54 @@ const API_URL = "http://localhost:3000/auth/login";
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     //Context use
     const { setUser } = useContext(AuthContext);
 
     async function handleSubmit(event) {
         event.preventDefault();
+        setError(null);
 
-        //fetch
-        const res = await fetch(API_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type" : "application/json"
-            },
-            body: JSON.stringify({
-                email,
-                password
-            })
-        });
+        setIsLoading(true);
 
-        const data = await res.json();
-        const token = data.user.token;
+        try{
+            //fetch
+            const res = await fetch(API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type" : "application/json"
+                },
+                body: JSON.stringify({
+                    email,
+                    password
+                })
+            });
 
-        //save user token
-        localStorage.setItem("token", token);
+            setIsLoading(false);
+    
+            const data = await res.json();
 
-        //Set global state
-        setUser(data.user.user);
+            if(!res.ok) {
+                setError(data.message || "Incorrect log-in, please try again.");
+                console.log(data.message);
+                return;
+            }
 
-        localStorage.setItem("user", JSON.stringify(data.user.user));
+            const token = data.user.token;
+    
+            //save user token
+            localStorage.setItem("token", token);
+    
+            //Set global state
+            setUser(data.user.user);
+    
+            localStorage.setItem("user", JSON.stringify(data.user.user));
+        } catch(error) {
+            setError("Cannot connect to server.");
+            console.error(error);
+        }
 
     }
 
@@ -42,6 +61,12 @@ function Login() {
         <div>
             <h1>Login</h1>
 
+            {error && (
+                <div className="alert alert-danger" role="alert">
+                    {error}
+                </div>
+            )}
+            
             <form onSubmit={handleSubmit}>
                 <label>Email</label>
                 <input 
@@ -57,9 +82,13 @@ function Login() {
                     onChange={(e) => setPassword(e.target.value)}
                 />
 
-                <button type="submit">Submit</button>
+                {
+                    !isLoading && 
+                    <button type="submit">Submit</button>
+                }
             </form>
         </div>
+           
     );
 }
 
