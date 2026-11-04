@@ -5,15 +5,19 @@ async function apiFetch({url, request}) {
     let { auth, ...fetchOptions } = request; 
     
     if(fetchOptions.body) {
+        fetchOptions.headers = {
+            ...fetchOptions.headers,
+            "Content-Type" : "application/json"
+        }
+
         fetchOptions.body = JSON.stringify(fetchOptions.body);
     }    
-
-    fetchOptions.headers = {
-        ...fetchOptions.headers,
-        "Content-Type" : "application/json"
-    }
     
     if(auth === true) {
+        if(!token) {
+            throw new Error("No token available.");
+        }
+
         fetchOptions = {
             ...fetchOptions,
             headers: {
@@ -22,8 +26,6 @@ async function apiFetch({url, request}) {
             }
         };
    }
-
-   
 
     const response = await fetch(url, fetchOptions);
 

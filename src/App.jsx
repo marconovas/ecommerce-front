@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NavBar from "./components/NavBar.jsx";
 import Cart from "./components/Cart";
 import { Route, Routes } from "react-router-dom";
@@ -8,7 +8,15 @@ import Login from "./pages/Login.jsx";
 
 
 function App() {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(() => {
+    const items = localStorage.getItem("cart");
+
+    return items ? JSON.parse(items) : []
+  });
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+  }, [cartItems])
 
   return (
     <>

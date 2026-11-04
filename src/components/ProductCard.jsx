@@ -15,25 +15,33 @@ function ProductCard({ product, setCartItems }) {
 
                 <button
                     className="btn btn-primary"
-                    onClick={() => setCartItems(prev =>{
-                    const itemfound = prev.find(item => item.id === product.id);
-                    
-                    if(!itemfound) {
-                        return [
-                            ...prev, 
-                            {
-                                ...product,
-                                quantity: 1
+                    onClick={() => {
+                        if(product.stock <= 0){
+                            return
+                        }
+                            
+                        setCartItems(prev =>{
+                            const itemfound = prev.find(item => item.id === product.id);
+                            
+                            if(!itemfound) {
+                                return [
+                                    ...prev, 
+                                    {
+                                        ...product,
+                                        quantity: 1
+                                    }
+                                ]
                             }
-                        ]
-                    }
-
-                    return prev.map(item => 
-                        item.id === product.id 
-                        ? {...item, quantity: item.quantity + 1}
-                        : item
-                    )
-                })}>   
+    
+                            return prev.map(item => 
+                                item.id === product.id && item.quantity < item.stock
+                                ? {...item, quantity: item.quantity + 1}
+                                : item
+                            )
+                        })
+                    }}
+                disabled={product.stock === 0}> 
+                    
                 Add to Cart
                 </button>
 

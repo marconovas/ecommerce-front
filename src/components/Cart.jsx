@@ -22,11 +22,11 @@ function Cart({cartItems, setCartItems}) {
                                     {item.quantity}
                                     <button className="btn btn-primary" onClick={() => setCartItems(prev => 
                                         prev.map(product => 
-                                            product.id === item.id
+                                            product.id === item.id && product.quantity < product.stock
                                             ?   {...product, quantity: product.quantity + 1 }
                                             : product
                                         )
-                                    )}>
+                                    )} disabled={item.quantity >= item.stock}>
                                         +
                                     </button>
     

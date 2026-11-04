@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import ProductList from "../components/ProductList";
+import apiFetch from "../services/api";
 
 const API_URL = "http://localhost:3000/products";
 
@@ -12,17 +13,17 @@ function Products({ setCartItems }) {
     useEffect(() => {
         async function fetchProducts() {
             try{
-                const res = await fetch(API_URL);
-                const data = await res.json();
-                console.log(data);
-                
-                setProducts(data.data);
+                const res = await apiFetch({
+                    url: API_URL, 
+                    request: {
+                        method: "GET"
+                    }
+                });
 
+                setProducts(res.data);
             } catch(error) {
-
                 console.log(error);
-                setError(true);
-
+                setError(error.message);
             } finally {
                 setIsLoading(false);
             }
@@ -30,7 +31,6 @@ function Products({ setCartItems }) {
 
         fetchProducts();
     }, []);
-
 
     return(
         isLoading ? (
